@@ -1,7 +1,7 @@
 {
   "name": "@navikt/react-decorator",
   "author": "NAVIKT",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Dekoratoren for nav.no",
   "homepage": "https://www-q0.nav.no/person/react-decorator",
   "main": "dist/index.js",
