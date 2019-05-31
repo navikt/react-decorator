@@ -18,7 +18,11 @@ const sjekkForFeil = (
 
 const hentJsonOgSjekkAuth = (url: string) =>
   new Promise((resolve, reject) =>
-    fetch(url, { method: "GET", mode: "no-cors" })
+    fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "text/html" },
+      mode: "no-cors"
+    })
       .then(response => sjekkForFeil(url, response, reject))
       .then(parseHtml)
       .then(resolve)
