@@ -1,0 +1,8 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/typescript"],
+  "exclude": ["node_modules/**"],
+  "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread"
+  ]
+}

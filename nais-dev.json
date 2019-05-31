@@ -1,0 +1,38 @@
+{
+  "apiVersion": "nais.io/v1alpha1",
+  "kind": "Application",
+  "metadata": {
+    "name": "react-decorator",
+    "namespace": "default",
+    "labels": {
+      "team": "personbruker"
+    }
+  },
+  "spec": {
+    "image": "navikt/react-decorator:LATEST",
+    "team": "personbruker",
+    "port": 80,
+    "ingresses": ["https://react-decorator.nais.oera-q.local/"],
+    "liveness": {
+      "path": "/isAlive",
+      "initialDelay": 10
+    },
+    "readiness": {
+      "path": "/isReady",
+      "initialDelay": 10
+    },
+    "replicas": {
+      "min": 1,
+      "max": 2
+    },
+    "resources": {
+      "limits": {
+        "cpu": "3",
+        "memory": "768Mi"
+      },
+      "requests": {
+        "memory": "512Mi"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #efefef;
+}
+
+.example__app {
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.example__content {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem 0;
+}
+
+.example__section {
+  padding: 2rem 1rem;
+  margin: 2rem 0;
+  background: white;
+}
