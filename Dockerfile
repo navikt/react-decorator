@@ -16,7 +16,7 @@ FROM nginx
 
 # Kopier statiske filer
 COPY --from=build /app /app
-COPY --from=build /app/example/build /var/www/
+COPY --from=build /app/example/build /var/www/person/decorator
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Definer produksjonsvller
