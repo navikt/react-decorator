@@ -19,12 +19,8 @@ const sjekkForFeil = (
 
 const hentJsonOgSjekkAuth = (url: string) =>
   new Promise((resolve, reject) =>
-    request(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json;charset=UTF-8" },
-      credentials: "include"
-    })
-      .then((response: any) => sjekkForFeil(url, response, reject))
+    request({ uri: url, method: "GET" })
+      .then(response => sjekkForFeil(url, response, reject))
       .then(parseHtml)
       .then(resolve)
       .catch(reject)
