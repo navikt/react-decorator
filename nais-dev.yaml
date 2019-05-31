@@ -11,12 +11,13 @@ spec:
   team: personbruker
   port: 80
   ingresses:
-    - https://react-decorator.nais.oera-q.local/
+    - https://react-decorator.nais.oera-q.local/person/react-decoratoren
+    - https://www-q0.nav.no/person/react-dekoratoren
   liveness:
-    path: /isAlive
+    path: /person/react-decoratoren/isAlive
     initialDelay: 10
   readiness:
-    path: /isReady
+    path: /person/react-decoratoren/isReady
     initialDelay: 10
   replicas:
     min: 1

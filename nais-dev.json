@@ -12,13 +12,16 @@
     "image": "navikt/react-decorator:LATEST",
     "team": "personbruker",
     "port": 80,
-    "ingresses": ["https://react-decorator.nais.oera-q.local/"],
+    "ingresses": [
+      "https://react-decorator.nais.oera-q.local/person/react-decoratoren",
+      "https://www-q0.nav.no/person/react-dekoratoren"
+    ],
     "liveness": {
-      "path": "/isAlive",
+      "path": "/person/react-dekoratoren/isAlive",
       "initialDelay": 10
     },
     "readiness": {
-      "path": "/isReady",
+      "path": "/person/react-dekoratoren/isReady",
       "initialDelay": 10
     },
     "replicas": {

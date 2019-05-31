@@ -3,7 +3,7 @@
   "author": "NAVIKT",
   "version": "1.0.0",
   "description": "Dekoratoren for nav.no",
-  "homepage": "https://react-decorator.nais.oera-q.local/",
+  "homepage": "https://www-q0.nav.no/person/react-dekorator",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
