@@ -1,5 +1,6 @@
 # NAV Dekoratør
 
+Dette er en prototype og skal ikke benyttes i prod.<br>
 React moduler / mikro-frontends som wrapper applikasjonen din med dekoratøren
 
 ## Installasjon
