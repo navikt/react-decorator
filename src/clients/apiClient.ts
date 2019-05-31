@@ -1,6 +1,5 @@
 import { logApiError } from "../utils/logger";
 import Environment from "../utils/environment";
-import request from "request-promise";
 
 const parseHtml = (data: any) => data.text();
 
@@ -19,7 +18,10 @@ const sjekkForFeil = (
 
 const hentJsonOgSjekkAuth = (url: string) =>
   new Promise((resolve, reject) =>
-    request({ uri: url, method: "GET" })
+    fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json;charset=UTF-8" }
+    })
       .then(response => sjekkForFeil(url, response, reject))
       .then(parseHtml)
       .then(resolve)

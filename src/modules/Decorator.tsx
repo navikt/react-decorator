@@ -18,16 +18,16 @@ export interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
+let Header: Function = () => null;
+let SkipLinks: Function = () => null;
+let Footer: Function = () => null;
+let Scripts: Function = () => null;
+let MegaMenuResources: Function = () => null;
+let Styles: Function = () => null;
+
 const Decorator = (props: Props) => {
   const [state, setState] = useState({ status: "LOADING" } as State);
   Environment.settEnv(props.miljo as Miljo);
-
-  let Header: Function = () => null;
-  let SkipLinks: Function = () => null;
-  let Footer: Function = () => null;
-  let Scripts: Function = () => null;
-  let MegaMenuResources: Function = () => null;
-  let Styles: Function = () => null;
 
   useEffect(() => {
     if (state.status === "LOADING") {
