@@ -8,26 +8,38 @@ import Environment from "../utils/environment";
 import Miljo from "../types/miljo";
 import { JSDOM } from "jsdom";
 
-type State =
+type State = {
+  fragments: {
+    Header: Function;
+    SkipLinks: Function;
+    Footer: Function;
+    Scripts: Function;
+    MegaMenu: Function;
+    Styles: Function;
+  };
+} & (
   | { status: "LOADING" }
-  | { status: "RESULT"; decorator: any }
-  | { status: "ERROR"; error: HTTPError };
+  | { status: "RESULT" }
+  | { status: "ERROR"; error: HTTPError });
 
 export interface Props {
   miljo: "LOCAL" | "DEV" | "PROD";
   children: JSX.Element | JSX.Element[];
 }
 
-let Header: Function = () => null;
-let SkipLinks: Function = () => null;
-let Footer: Function = () => null;
-let Scripts: Function = () => null;
-let MegaMenuResources: Function = () => null;
-let Styles: Function = () => null;
-
 const Decorator = (props: Props) => {
-  const [state, setState] = useState({ status: "LOADING" } as State);
   Environment.settEnv(props.miljo as Miljo);
+  const [state, setState] = useState({
+    status: "LOADING",
+    fragments: {
+      Header: () => null,
+      SkipLinks: () => null,
+      Footer: () => null,
+      Scripts: () => null,
+      MegaMenu: () => null,
+      Styles: () => null
+    }
+  } as State);
 
   useEffect(() => {
     if (state.status === "LOADING") {
@@ -44,32 +56,29 @@ const Decorator = (props: Props) => {
           const MEGAMENU = document.getElementById("megamenu-resources");
 
           const data = {
-            NAV_HEADING: { __html: NAV_HEADING ? NAV_HEADING[prop] : "" },
-            NAV_SKIPLINKS: { __html: NAV_SKIPLINKS ? NAV_SKIPLINKS[prop] : "" },
-            NAV_FOOTER: { __html: NAV_FOOTER ? NAV_FOOTER[prop] : "" },
-            NAV_SCRIPTS: { __html: NAV_SCRIPTS ? NAV_SCRIPTS[prop] : "" },
-            MEGAMENU_RESOURCES: { __html: MEGAMENU ? MEGAMENU[prop] : "" },
-            NAV_STYLES: { __html: NAV_STYLES ? NAV_STYLES[prop] : "" }
+            HEADING: { __html: NAV_HEADING ? NAV_HEADING[prop] : "" },
+            SKIPLINKS: { __html: NAV_SKIPLINKS ? NAV_SKIPLINKS[prop] : "" },
+            FOOTER: { __html: NAV_FOOTER ? NAV_FOOTER[prop] : "" },
+            SCRIPTS: { __html: NAV_SCRIPTS ? NAV_SCRIPTS[prop] : "" },
+            MEGAMENU: { __html: MEGAMENU ? MEGAMENU[prop] : "" },
+            STYLES: { __html: NAV_STYLES ? NAV_STYLES[prop] : "" }
           };
-
-          Header = () => <div dangerouslySetInnerHTML={data.NAV_HEADING} />;
-          SkipLinks = () => (
-            <div dangerouslySetInnerHTML={data.NAV_SKIPLINKS} />
-          );
-          Footer = () => <div dangerouslySetInnerHTML={data.NAV_FOOTER} />;
-          Scripts = () => <div dangerouslySetInnerHTML={data.NAV_SCRIPTS} />;
-          MegaMenuResources = () => (
-            <div dangerouslySetInnerHTML={data.MEGAMENU_RESOURCES} />
-          );
-          Styles = () => <div dangerouslySetInnerHTML={data.NAV_STYLES} />;
 
           setState({
             status: "RESULT",
-            decorator: data
+            fragments: {
+              Header: () => <div dangerouslySetInnerHTML={data.HEADING} />,
+              SkipLinks: () => <div dangerouslySetInnerHTML={data.SKIPLINKS} />,
+              Footer: () => <div dangerouslySetInnerHTML={data.FOOTER} />,
+              Scripts: () => <div dangerouslySetInnerHTML={data.SCRIPTS} />,
+              MegaMenu: () => <div dangerouslySetInnerHTML={data.MEGAMENU} />,
+              Styles: () => <div dangerouslySetInnerHTML={data.STYLES} />
+            }
           });
         })
         .catch((error: HTTPError) =>
           setState({
+            ...state,
             status: "ERROR",
             error
           })
@@ -81,6 +90,15 @@ const Decorator = (props: Props) => {
     case "LOADING":
       return <Spinner />;
     case "RESULT":
+      const {
+        Header,
+        SkipLinks,
+        Footer,
+        Scripts,
+        MegaMenu,
+        Styles
+      } = state.fragments;
+
       return (
         <div>
           <Header />
@@ -88,7 +106,7 @@ const Decorator = (props: Props) => {
           {props.children}
           <Footer />
           <Scripts />
-          <MegaMenuResources />
+          <MegaMenu />
           <Styles />
         </div>
       );
