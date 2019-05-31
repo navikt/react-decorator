@@ -3,7 +3,7 @@ FROM node:11.7.0 as build
 # Kopier filer
 COPY . app/
 
-# Kompiler deokoratør
+# Kompiler arbeidsforhold
 WORKDIR /app
 RUN npm install && npm run build
 
@@ -16,7 +16,7 @@ FROM nginx
 
 # Kopier statiske filer
 COPY --from=build /app /app
-COPY --from=build /app/example/build /var/www/person/decorator
+COPY --from=build /app/example/build /var/www/person/react-decorator
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Definer produksjonsvller
